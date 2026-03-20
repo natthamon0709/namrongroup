@@ -1,9 +1,9 @@
 <?php
 // ตั้งค่าการเชื่อมต่อฐานข้อมูล
-$servername = "localhost";
-$username = "root"; // ชื่อผู้ใช้ฐานข้อมูล (เปลี่ยนตามการตั้งค่าของคุณ)
-$password = "";     // รหัสผ่านฐานข้อมูล (เปลี่ยนตามการตั้งค่าของคุณ)
-$dbname = "nextgen_shop"; // ชื่อฐานข้อมูลที่เราสร้างไว้
+$servername = "ehc1u4pmphj917qf.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
+$username = "br2adqrea95szyr5"; // ชื่อผู้ใช้ฐานข้อมูล (เปลี่ยนตามการตั้งค่าของคุณ)
+$password = "yn6jvlsvk6pmacrv";     // รหัสผ่านฐานข้อมูล (เปลี่ยนตามการตั้งค่าของคุณ)
+$dbname = "ah791wht998x3wu2"; // ชื่อฐานข้อมูลที่เราสร้างไว้
 
 // สร้างการเชื่อมต่อ (Create connection)
 $conn = new mysqli($servername, $username, $password, $dbname);
