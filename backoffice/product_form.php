@@ -279,7 +279,8 @@ include 'includes/header.php';
 </div>
 
 <?php include 'includes/footer.php'; ?>
-
+<link rel="stylesheet" href="/backoffice/plugins/summernote/summernote-bs4.min.css">
+<script src="/backoffice/plugins/summernote/summernote-bs4.min.js"></script>
 <script>
     $(document).ready(function() {
         $('.summernote').summernote({
