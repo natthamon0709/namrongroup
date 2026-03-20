@@ -353,7 +353,12 @@ $theme_color = isset($settings['theme_color']) ? htmlspecialchars($settings['the
                     </li>
 
                     <!-- ส่วนตรวจสอบการเข้าสู่ระบบ -->
-                    <?php if (isset($_SESSION['user_id'])): ?>
+                    <?php 
+                        // ต้องมั่นใจว่ามี session_start() อยู่บนสุดของไฟล์ index.php หรือไฟล์นี้
+                        if (isset($_SESSION['user_id'])): 
+                            // ป้องกัน Error ถ้า user_name เป็นค่าว่างหรือ null
+                            $display_name = isset($_SESSION['user_name']) && !empty($_SESSION['user_name']) ? $_SESSION['user_name'] : 'User';
+                    ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="user-avatar-sm">
