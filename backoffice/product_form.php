@@ -171,14 +171,14 @@ include 'includes/header.php';
                                 <!-- Summernote Fields -->
                                 <div class="form-group">
                                     <label>คุณสมบัติเด่น (Features)</label>
-                                    <textarea class="form-control summernote" name="features"><?php echo $product ? htmlspecialchars($product['features']) : ''; ?></textarea>
-                                    <small class="text-muted">ใช้สำหรับใส่ Bullet points หรือรายการจุดเด่น</small>
+                                    <textarea class="form-control" name="features"><?php echo $product ? htmlspecialchars($product['features']) : ''; ?></textarea>
+                                    <!-- <small class="text-muted">ใช้สำหรับใส่ Bullet points หรือรายการจุดเด่น</small> -->
                                 </div>
 
                                 <div class="form-group">
                                     <label>ข้อมูลจำเพาะ (Specifications)</label>
-                                    <textarea class="form-control summernote" name="specifications"><?php echo $product ? htmlspecialchars($product['specifications']) : ''; ?></textarea>
-                                    <small class="text-muted">ใช้สำหรับใส่ตารางสเปคสินค้า</small>
+                                    <textarea class="form-control" name="specifications"><?php echo $product ? htmlspecialchars($product['specifications']) : ''; ?></textarea>
+                                    <!-- <small class="text-muted">ใช้สำหรับใส่ตารางสเปคสินค้า</small> -->
                                 </div>
 
                                 <div class="row">
