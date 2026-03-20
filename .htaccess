@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# 1. หากผู้ใช้พิมพ์ .php มา ให้ Redirect ไปยัง URL ที่ไม่มีนามสกุล (เพื่อ SEO ที่ดี)
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# 2. หาก URL ไม่มีนามสกุล ให้เซิร์ฟเวอร์ดึงไฟล์ .php มาแสดงผล
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L,QSA]
