@@ -92,13 +92,13 @@ include 'includes/header.php';
     }
 </style>
 
-<header class="py-4">
+<!-- <header class="py-4">
     <div class="container">
         <div class="hero-banner">
             <img src="uploads/banner.png" alt="Featured Event" class="w-100 img-fluid">
         </div>
     </div>
-</header>
+</header> -->
 
 <section id="events" class="py-5">
     <div class="container">

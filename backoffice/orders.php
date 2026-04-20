@@ -120,110 +120,169 @@ $result = $conn->query($sql);
     /* เพิ่มปุ่ม Slip */
     .btn-slip { background: #fff7ed; color: #ea580c; border: none; }
 
-    /* Ticket Box for UI & Print */
-    .ticket-box {
-        background: #fff;
-        border-radius: 20px;
+    /* ===== NEW TICKET HORIZONTAL ===== */
+    /* ตกแต่งส่วนรอยปรุให้เนียนขึ้น */
+        .ticket-horizontal::before, .ticket-horizontal::after {
+            background: #1a1a1a !important; /* เปลี่ยนตามสีพื้นหลัง Modal ของคุณ */
+            border: 2px solid #ffd700;
+        }
+
+        /* ตกแต่งส่วนหางตั๋ว */
+        /* .ticket-stub {
+            background: linear-gradient(180deg, #ffda44 0%, #ffd700 100%);
+        } */
+        /* Ticket Layout แนวนอน */
+        #ticketContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .ticket-horizontal {
+            display: flex;
+            width: 100%;
+            max-width: 750px;
+            height: 220px;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            border: 2px solid #333;
+        }
+
+        /* ฝั่งซ้าย (ข้อมูลหลัก) */
+        .ticket-main {
+            flex: 3;
+            padding: 20px;
+            position: relative;
+            border-right: 2px dashed #ccc;
+            background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+        }
+
+        /* ฝั่งขวา (ส่วนหางตั๋ว/Stub) */
+        .ticket-stub {
+            flex: 1;
+            /* background: var(--concert-gold); */
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #000;
+            background: linear-gradient(180deg, #ffda44 0%, #ffd700 100%);
+        }
+
+        /* วงกลมรอยปรุ */
+        .ticket-horizontal::before, .ticket-horizontal::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #222; /* สีเดียวกับ Backdrop ของ Modal */
+            border-radius: 50%;
+            left: 75%; /* ตำแหน่งรอยปรุ */
+            margin-left: -15px;
+            z-index: 2;
+        }
+        .ticket-horizontal::before { top: -15px; }
+        .ticket-horizontal::after { bottom: -15px; }
+
+        .event-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #d63384;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        
+    @media print {
+    /* 1. บังคับสีพื้นหลัง */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 2. ตั้งค่าหน้ากระดาษ */
+    @page {
+        size: A4 portrait;
+        margin: 0;
+    }
+
+    /* 3. ล้างค่าโครงสร้างเว็บทั้งหมด */
+    body { 
+        margin: 0 !important; 
         padding: 0 !important; 
-        margin-bottom: 30px;
-        width: 100%;
-        max-width: 380px;
-        margin-left: auto;
-        margin-right: auto;
+        width: 210mm !important; /* บังคับกว้างเท่า A4 */
+    }
+    body * { visibility: hidden; }
+
+    /* 4. แสดงเฉพาะตั๋ว และล้างค่า Bootstrap Modal */
+    #ticketModal, 
+    #ticketModal *, 
+    #ticketsContainer, 
+    #ticketsContainer * { 
+        visibility: visible; 
+    }
+
+    /* ล้างค่าดักกลางจอของ Bootstrap (สำคัญมาก) */
+    .modal { 
+        position: absolute !important; 
+        display: block !important; 
+        padding: 0 !important; 
+        margin: 0 !important;
+        overflow: visible !important;
+    }
+    .modal-dialog { 
+        max-width: 100% !important; 
+        margin: 0 !important; 
+        padding: 0 !important; 
+        transform: none !important; /* ล้างค่าที่ Bootstrap ดึงกลางจอ */
+    }
+    .modal-content { 
+        background: none !important; 
+        border: none !important; 
+        box-shadow: none !important;
+    }
+
+    /* 5. จัดการ Container ให้ตรงกลางกระดาษจริง */
+    #ticketsContainer {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding-top: 15mm !important;
+        text-align: center !important; /* ช่วยให้ inline-block อยู่กลาง */
+    }
+
+    /* 6. ปรับขนาดตั๋วให้พอดี (Safe Zone) */
+    .ticket-horizontal {
+        visibility: visible !important;
+        display: inline-flex !important; /* เปลี่ยนเป็น inline-flex เพื่อให้ text-align: center ทำงาน */
+        flex-direction: row !important;
+        
+        margin: 0 auto 5mm auto !important; 
+        page-break-inside: avoid;
+        border: 1px solid #f9c03d !important;
+        background: #fff !important;
+
+        width: 175mm !important; 
+        height: 60mm !important;
+        position: relative !important;
         overflow: hidden;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        border: none;
+        text-align: left !important; /* ให้ข้อความข้างในตั๋วชิดซ้ายปกติ */
     }
 
-    .ticket-header {
-        background: #007bff; 
-        color: white;
-        padding: 15px;
-        text-align: center;
+    /* 7. ซ่อนปุ่มและขยะส่วนเกิน */
+    .modal-header, .btn, .btn-close, .text-center.mt-3, .modal-backdrop { 
+        display: none !important; 
     }
-
-    .ticket-body {
-        padding: 25px;
-        text-align: center;
-    }
-
-    .ticket-event-title {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 20px;
-        line-height: 1.4;
-    }
-
-    .qr-wrapper {
-        background: white;
-        padding: 15px;
-        border: 1px solid #eee;
-        border-radius: 15px;
-        display: inline-block;
-        margin-bottom: 20px;
-    }
-
-    .ticket-divider {
-        position: relative;
-        border-top: 2px dashed #eee;
-        margin: 0 20px;
-    }
-    .ticket-divider::before, .ticket-divider::after {
-        content: '';
-        position: absolute;
-        width: 25px;
-        height: 25px;
-        background: #f3f4f6; 
-        border-radius: 50%;
-        top: -12.5px;
-    }
-    .ticket-divider::before { left: -32.5px; }
-    .ticket-divider::after { right: -32.5px; }
-
-    .ticket-footer-info {
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-    }
-
-    .ticket-serial {
-        background: #f8fafc;
-        padding: 8px;
-        font-size: 0.7rem;
-        color: #64748b;
-        text-align: center;
-        border-top: 1px solid #f1f5f9;
-    }
-
-    /* PRINT OPTIMIZATION */
-   @media print {
-        @page { size: A4 portrait; margin: 0; }
-        body * { visibility: hidden; background: none !important; }
-        #ticketModal, .modal, .modal-dialog, .modal-content, .modal-body, #ticketContainer, #ticketContainer * { 
-            visibility: visible !important; display: block !important; overflow: visible !important;
-        }
-        #ticketModal { position: absolute !important; left: 0; top: 0; width: 100%; background: white !important; }
-        .modal-dialog { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
-        .modal-content { border: none !important; box-shadow: none !important; background: white !important; }
-        .modal-header, .modal-footer, .close, .btn { display: none !important; }
-        .ticket-box {
-            visibility: visible !important;
-            box-shadow: none !important;
-            border: 1px solid #333 !important; 
-            margin: 15mm auto !important; 
-            width: 160mm !important; 
-            background: white !important;
-            page-break-after: always !important; 
-            break-after: page !important;
-            page-break-inside: avoid !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-        }
-        .ticket-header { background-color: #007bff !important; color: white !important; padding: 20px !important; }
-        .ticket-divider::before, .ticket-divider::after { background: white !important; border: 1px solid #333 !important; visibility: visible !important; }
-    }
+}
 </style>
 
 <div class="content-wrapper">
@@ -330,7 +389,7 @@ $result = $conn->query($sql);
 </div>
 
 <div class="modal fade" id="ticketModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" id="ticketModalContent" style="border-radius: 30px; border: none;">
             <div class="modal-header border-0 p-4">
                 <h5 class="modal-title font-weight-bold"><i class="fas fa-qrcode mr-2"></i> E-Tickets</h5>
@@ -391,63 +450,115 @@ $result = $conn->query($sql);
     }
 
     function fetchTickets(orderId, orderNum, customerName) {
+    const container = document.getElementById('ticketContainer');
+
+    container.innerHTML = `
+        <div class="text-center py-5">
+            <div class="spinner-border text-warning mb-2"></div>
+            <br><span class="fw-bold">กำลังโหลดบัตร...</span>
+        </div>
+    `;
+
     $.ajax({
-        url: 'get_order_quantity.php',
+        url: 'get_order_items.php', // ⚠️ ต้องมี API นี้ (ดูด้านล่าง)
         method: 'GET',
         data: { order_id: orderId },
         success: function(response) {
-            const data = JSON.parse(response);
-            const qty = parseInt(data.total_quantity);
-            const container = document.getElementById('ticketContainer');
+            const items = JSON.parse(response);
             container.innerHTML = '';
 
-            for(let i = 1; i <= qty; i++) {
-                const ticketNo = `${orderNum}-${i}`;
-                
-                // === ก๊อปปี้ Code HTML ด้านล่างนี้ไปวางแทนที่อันเดิมใน Loop ===
-                container.innerHTML += `
-                    <div class="ticket-box">
-                        <div class="ticket-header d-flex align-items-center justify-content-between p-3" style="background: #007bff; color: white;">
-                            <div class="ticket-logo" style="max-width: 120px;">
-                                <img src="../uploads/logo_1765163792.png" alt="Logo" class="img-fluid" style="max-height: 35px;">
+            let ticketIndex = 1;
+
+            items.forEach(item => {
+                for (let i = 0; i < item.quantity; i++) {
+
+                    const ticketSerial = `${orderNum}-${ticketIndex}`;
+                    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=TICKET_ID:${ticketSerial}`;
+                    const logoPath = "../uploads/logo_1765163792.png";
+
+                    container.innerHTML += `
+                    <div class="ticket-horizontal">
+
+                        <!-- LEFT -->
+                        <div class="ticket-main">
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <img src="${logoPath}" style="height:45px;">
+                                </div>
+
+                                <div class="text-end">
+                                    <span class="badge bg-danger mb-1" style="font-size:0.7rem;">
+                                        บัตรเข้าชมการแสดง (E-TICKET)
+                                    </span>
+                                    <div class="small fw-bold">No. #${ticketSerial}</div>
+                                </div>
                             </div>
-                            
-                            <div class="ticket-info text-right">
-                                <div class="small font-weight-bold">CONCERT E-TICKET</div>
-                                <div class="small">ใบที่ ${i} / ORDER #${orderNum}</div>
+
+                            <div class="event-name" style="color:#b30000; font-size:1.4rem; font-weight:800;">
+                                ${item.product_name}
                             </div>
-                        </div>
-                        
-                        <div class="ticket-body text-center p-4">
-                            <div class="ticket-event-title font-weight-bold" style="font-size: 1.2rem; color: #333; margin-bottom: 20px;">
-                                23 มี.ค. 69 โชคอุดมค้าข้าวอำเภอ<br>ดอกคำใต้ จังหวัดพะเยา
+
+                            <div class="row align-items-end mt-3">
+                                <div class="col-7">
+                                    <div style="font-size:0.7rem; color:#666;">ผู้ซื้อ</div>
+                                    <div class="fw-bold text-dark">
+                                        ${customerName}
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <span class="btn btn-sm btn-primary" style="border-radius:50px; font-size:0.75rem;">
+                                            ประตูเปิด : 17:00 น.
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-5 text-end">
+                                    <div class="small fw-bold text-success">
+                                        ✔ ชำระเงินเรียบร้อยแล้ว
+                                    </div>
+                                    <div style="font-size:0.6rem; color:#cc0000;">
+                                        *กรุณาแสดง QR หน้างาน
+                                    </div>
+                                </div>
                             </div>
-                            <div class="qr-wrapper border p-3 rounded" style="display: inline-block;">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=TICKET:${ticketNo}" style="width:180px;">
-                            </div>
+
                         </div>
 
-                        <div class="ticket-divider" style="position: relative; border-top: 2px dashed #eee; margin: 0 20px;"></div>
+                        <!-- RIGHT -->
+                        <div class="ticket-stub">
 
-                        <div class="ticket-footer-info d-flex justify-content-between align-items-end p-4">
-                            <div class="text-left">
-                                <div class="small text-muted">ผู้ซื้อ</div>
-                                <div class="font-weight-bold" style="color:#333;">${customerName}</div>
+                            <img src="${logoPath}" style="height:25px; position:absolute; top:10px; opacity:0.8;">
+
+                            <div class="qr-wrapper bg-white p-2 mb-2 rounded shadow-sm" style="margin-top:15px;">
+                                <img src="${qrUrl}" style="width:100px; height:100px;">
                             </div>
-                            <div class="text-right">
-                                <div class="small text-muted">สถานะ</div>
-                                <div class="font-weight-bold text-success">ชำระแล้ว</div>
+
+                            <div class="fw-bold text-dark" style="font-size:0.8rem;">
+                                ใบที่ ${ticketIndex}
                             </div>
+
+                            <div class="text-dark fw-bold" style="font-size:0.6rem;">
+                                ORDER #${orderNum}
+                            </div>
+
                         </div>
 
-                        <div class="ticket-serial text-center p-2 small text-muted" style="background: #f8fafc;">
-                            SERIAL: ${ticketNo} | สแกนที่หน้าประตูทางเข้า
-                        </div>
                     </div>
-                `;
-                // === สิ้นสุด Code HTML ที่ต้องก๊อปปี้ ===
-            }
+                    `;
+
+                    ticketIndex++;
+                }
+            });
+
             $('#ticketModal').modal('show');
+        },
+        error: function() {
+            container.innerHTML = `
+                <div class="alert alert-danger text-center">
+                    โหลดบัตรไม่สำเร็จ
+                </div>
+            `;
         }
     });
 }
